@@ -1,0 +1,40 @@
+
+<form action="run" method="POST">
+	How many hours of comments you want to keep<br>
+	24 hours in a day,<br>
+	168 hours in a week,<br>
+	672 hours in two fortnights,<br>
+	720 hours in a month (30 days),<br>
+	8766 hours in a year (365.25 days)<br>
+	hours:<br>
+	<input type="number"  placeholder="24" value="24" name="hours"><br>
+	<br>
+	Max score, higher than this and it'll be kept.<br>
+	max_score:<br>
+	<input type="number" placeholder="20" value="20" name="max_score"><br>
+	<br>
+	Options: new, top, controversial, more?<br>
+	sort:<br>
+	<input type="text" placeholder="new" value="new" name="sort"><br>
+	<br>
+	<input type="hidden" placeholder="True" value="True" name="verbose">
+	<input type="hidden" placeholder="False" value="False" name="clear_vote">
+	Options: comments, submitted, overview<br>
+	See: https://github.com/mellort/reddit_api/blob/master/reddit/objects.py#L359<br>
+	Overview: both submissions and comments. Comments / Submitted are as expected<br>
+	item:<br>
+	<input type="text" placeholder="overview" value="overview" name="item"><br>
+	<br>
+	If you set this then no editing or deleting will be done<br>
+	but the output from the program will be shown as an example<br>
+	trial_run:<br>
+	<input type="text" placeholder="False" value="False" name="trial_run"><br>
+	<input type="hidden" placeholder="True" value="True" name="whitelist_distinguished">
+	<input type="hidden" placeholder="True" value="True" name="whitelist_gilded">
+	<input type="hidden" placeholder="False" value="False" name="keep_a_copy">
+	<input type="hidden" placeholder="/tmp" value="/tmp" name="save_directory">
+	<input type="hidden" placeholder="DEBUG" value="DEBUG" name="debug">
+	<input type="hidden" name="refresh_token" value=<%=refresh_token%>>
+	<br>
+	<button type="submit">Run</button>
+</form>
