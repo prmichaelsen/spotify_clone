@@ -1,10 +1,10 @@
 {
   "name": "regretit",
-	"version": "1.0.0",     
-	"dependencies": 
-	{         
-		"bootstrap": "latest",				
-		"font-awesome": "latest",         
-		"animate.css": "latest"
-	}
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "bootstrap-combobox": "^1.1.7"
+  }
 }

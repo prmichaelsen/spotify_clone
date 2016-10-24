@@ -44,6 +44,7 @@ app.get('/regretit/', function (req,res){
 });
 
 app.post('/regretit/run', function (req,res){
+	console.log(req.body);
 	var py = spawn('python',['/home/user/shreddit/shreddit.py','-j',JSON.stringify(req.body)])
 	py.stdout.on('data', function(data) { 
 		console.log('stdout: '+ data);

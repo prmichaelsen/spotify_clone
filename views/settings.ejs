@@ -1,3 +1,8 @@
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.7/js/bootstrap-combobox.js"></script>
+
 <!-- CSS -->     
 <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">     
 <link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
@@ -13,7 +18,13 @@
 			<input type="number" placeholder="20" value="20" name="max_score"><br>
 			<br>
 			Sort (new, top, controversial, hot):<br>
-			<input type="text" placeholder="new" value="new" name="sort"><br>
+			<select class="combobox" name="sort">
+				<option value="new"></option>
+				<option value="new">new</option>
+				<option value="top">top</option>
+				<option value="controversial">controversial</option>
+				<option value="hot">hot</option>
+			</select>
 			<br>
 			<input type="hidden" placeholder="True" value="True" name="verbose">
 			<input type="hidden" placeholder="False" value="False" name="clear_vote">
@@ -33,3 +44,9 @@
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+			$('.combobox').combobox();
+	});
+</script>
