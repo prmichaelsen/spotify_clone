@@ -61,13 +61,6 @@ py.on('close' , function(code){
 });
 
 
-app.get('/regretit/about', function (req, res){ 
-	res.send(
-		"<h3>Shreddit</h3>This is a webservice for deleting your reddit history. This webservice will delete reddit comments and submissions with less than 20 points excepting any gilded posts.<br>You must specifiy user and password as URL parameters.<br>e.g. patrickmichaelsen.com/shreddit?user=myname&password=mypass<br><br>The page will take a long time to load. Be patient to see the output.<br><br>See the source code here: <a href='https://github.com/x89/Shreddit'>https://github.com/x89/Shreddit</a> <br><br>"
-		);
-});
-
-
 app.get('/regretit/reddit_callback', function (req, res) {
 	//	passport.authenticate('reddit', {	
 	//		successRedirect: '/regretit/welcome',
@@ -97,27 +90,8 @@ app.get('/regretit/reddit_callback', function (req, res) {
 
 });
 
-app.get('/regretit/welcome', function (req, res) {
-	res.send(req);
-});
 
-app.get('/regretit/authorize', function (req, res) {
-
-	var state = uuid();
-	var params = {"client_id": CLIENT_ID,
-		"response_type": "code",
-	"state": state,
-	"redirect_uri": REDIRECT_URI,
-	"duration": "permanent",
-	"scope": "identity edit read history"};
-	url = "https://ssl.reddit.com/api/v1/authorize?" + $.param(params);
-
-	res.send("<a href="+url+">Authorize Regretit</a>");
-});
-
-
-
-app.listen(4545, function() {
+app.listen(process.env.REGRETIT_PORT, function() {
 	console.log('Listening...');
 });
 
