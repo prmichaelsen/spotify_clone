@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
 <div class="container">
 	<h3>Regretit</h3>
-	Delete reddit posts and comments from your account! You can set the following options:
+	Delete reddit posts and comments from your account! This tool will not delete gilded items. You can set the following options:
 	<div>
 		<form id="settingsForm" action="run" method="POST" class="form-horizontal">
 			<div>
@@ -22,7 +22,7 @@
 			</div>
 			<div>
 				<label class="control-label">Sort (new, top, controversial, hot):</label>
-				<select class="combobox form-control" name="sort">
+				<select required="required" class="combobox form-control" name="sort">
 					<option value="">select a sort method</option>
 					<option value="new">new</option>
 					<option value="top">top</option>
@@ -34,7 +34,7 @@
 			<input type="hidden" placeholder="False" value="False" name="clear_vote">
 			<div>
 				<label class="control-label">Items (comments, submitted, overview):</label>
-				<select class="combobox form-control" name="item">
+				<select required="required" class="combobox form-control" name="item">
 					<option value="">select which items to delete</option>
 					<option value="overview">overview</option>
 					<option value="submitted">submitted</option>
@@ -43,7 +43,7 @@
 			</div>
 			<div>
 				<label class="control-label">Trial Run (False means this run will actually delete comments!):</label>
-				<select class="combobox form-control" name="trial_run">
+				<select required="required" class="combobox form-control" name="trial_run">
 					<option value="">enable trial run</option>
 					<option value="True">true</option>
 					<option value="False">false</option>
