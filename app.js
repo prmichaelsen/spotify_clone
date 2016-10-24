@@ -49,20 +49,13 @@ app.get('/regretit/reddit_callback', function (req, res) {
 	if(req.query.code){
 		var py = spawn('python',['/home/user/regretit/get_oauth.py',req.query.code]);
 		py.stdout.on('data', function(data) { 
-			console.log('stdout: '+ data);
-			res.write("<a href='http://www.patrickmichaelsen.com/regretit/run?refresh_token="+data+ "'>Run</a>");
-		});
-		py.on('close' , function(code){
-			res.end();
+			res.render('settings', { refresh_token: data });
 		});
 	}
 	else if(req.query.error)
-{
-
-	res.send("Login failed. Back to <a href='http://www.patrickmichaelsen.com/regretit'>Regretit</a>");
-}else{
-	res.send("Unknown error. Back to <a href='http://www.patrickmichaelsen.com/regretit'>Regretit</a>");
-}
+	{
+		res.redirect('/regretit/');
+	}
 
 });
 
