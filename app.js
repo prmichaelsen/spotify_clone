@@ -4,14 +4,10 @@ var util  = require('util');
 var spawn = require('child_process').spawn;
 var http = require('http');
 var request = require('request');
-var uuid = require('uuid4');
-var passport = require('passport');
-var RedditStrategy = require('passport-reddit').Strategy;
- 
+var uuid = require('uuid4'); 
 
 //for setting the view engine template type
 app.set('view engine','ejs');
-
 
 require("jsdom").env("", function(err, window) {     
 	if (err) {         
@@ -23,18 +19,6 @@ require("jsdom").env("", function(err, window) {
 	CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
 	CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
 	REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
-
-	passport.use(new RedditStrategy({     
-		clientID: CLIENT_ID,     
-		clientSecret: CLIENT_SECRET,     
-		callbackURL: REDIRECT_URI   
-	},  
-	function(accessToken, refreshToken, profile, done) {     
-		User.findOrCreate({ redditId: profile.id }, function (err, user) {       
-			return done(err, user);     
-		});   
-	} 
-	));
 
 app.get('/regretit/', function (req,res){
 	//build authorize request
@@ -62,14 +46,6 @@ py.on('close' , function(code){
 
 
 app.get('/regretit/reddit_callback', function (req, res) {
-	//	passport.authenticate('reddit', {	
-	//		successRedirect: '/regretit/welcome',
-	//		failureRedirect: '/regretit/authorize'
-	//	})(req, res, function(){
-	//	});
-
-	//res.write(req.query);
-
 	if(req.query.code){
 		var py = spawn('python',['/home/user/regretit/get_oauth.py',req.query.code]);
 		py.stdout.on('data', function(data) { 
@@ -89,7 +65,6 @@ app.get('/regretit/reddit_callback', function (req, res) {
 }
 
 });
-
 
 app.listen(process.env.REGRETIT_PORT, function() {
 	console.log('Listening...');
