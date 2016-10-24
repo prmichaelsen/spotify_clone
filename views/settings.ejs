@@ -14,7 +14,7 @@
 		<form id="settingsForm" action="run" method="POST" class="form-horizontal">
 			<div>
 				<label class="control-label">Hours (Deletes comments older than this many hours):</label>
-				<input class="form-control" type="number"  placeholder="delete comments older than this many hours" value="" name="hours">
+				<input class="form-control" type="number" min="0" placeholder="delete comments older than this many hours" value="" name="hours">
 			</div>
 			<div>
 				<label class="control-label">Score Threshold (Deletes comments with less than this score):</label>
@@ -65,21 +65,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-
-			$('#settingsForm')
-				//.formValidation({
-					//framework: 'bootstrap',
-					//icon: {
-						//valid: 'glyphicon glyphicon-ok', 
-						//invalid: 'glyphicon gylphicon-remove',
-						//validating: 'glyphicon glyphicon-refresh'
-					//},
-					//excluded: ':disabled', 
-					//fields: {
-					//}
-				//})
-				.find('[name="sort"],[name="item"],[name="trial_run"]').combobox();
-			//$('.combobox').combobox();
-						
+		$('.combobox').combobox();			
 	});
 </script>
