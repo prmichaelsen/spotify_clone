@@ -1,10 +1,17 @@
 var express = require('express');
+var bodyParser = require('body-parser'); //require BEFORE express()
 var app = express();
 var util  = require('util');
 var spawn = require('child_process').spawn;
 var http = require('http');
 var request = require('request');
 var uuid = require('uuid4'); 
+
+//for parsing req body
+app.use(bodyParser.urlencoded({extended: true}));
+
+//teach app to read json
+app.use(bodyParser.json());
 
 //for setting the view engine template type
 app.set('view engine','ejs');
@@ -33,8 +40,8 @@ app.get('/regretit/', function (req,res){
 	res.render("index.ejs", {login: login});
 });
 
-app.get('/regretit/run', function (req,res){
-	var py = spawn('python',['/home/user/shreddit/shreddit.py','-r',req.query.refresh_token])
+app.post('/regretit/run', function (req,res){
+	var py = spawn('python',['/home/user/shreddit/shreddit.py','-r',req.body.refresh_token])
 	py.stdout.on('data', function(data) { 
 		console.log('stdout: '+ data);
 		res.write('stdout: '+ data);
