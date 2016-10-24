@@ -2,6 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.7/js/bootstrap-combobox.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-combobox/1.1.7/css/bootstrap-combobox.min.css"></script>
 
 <!-- CSS -->     
 <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">     
@@ -10,29 +11,44 @@
 	<h3>Regretit</h3>
 	Delete reddit posts and comments from your account! You can set the following options:
 	<div>
-		<form action="run" method="POST">
-			Hours (Deletes comments older than this many hours):<br>
-			<input type="number"  placeholder="24" value="24" name="hours"><br>
-			<br>
-			Score Threshold (Deletes comments with less than this score):<br>
-			<input type="number" placeholder="20" value="20" name="max_score"><br>
-			<br>
-			Sort (new, top, controversial, hot):<br>
-			<select class="combobox" name="sort">
-				<option value="new"></option>
-				<option value="new">new</option>
-				<option value="top">top</option>
-				<option value="controversial">controversial</option>
-				<option value="hot">hot</option>
-			</select>
-			<br>
+		<form id="settingsForm" action="run" method="POST" class="form-horizontal">
+			<div>
+				<label class="control-label">Hours (Deletes comments older than this many hours):</label>
+				<input class="form-control" type="number"  placeholder="delete comments older than this many hours" value="" name="hours">
+			</div>
+			<div>
+				<label class="control-label">Score Threshold (Deletes comments with less than this score):</label>
+				<input class="form-control" type="number" placeholder="delete comments with less than this score" value="" name="max_score">
+			</div>
+			<div>
+				<label class="control-label">Sort (new, top, controversial, hot):</label>
+				<select class="combobox form-control" name="sort">
+					<option value="">select a sort method</option>
+					<option value="new">new</option>
+					<option value="top">top</option>
+					<option value="controversial">controversial</option>
+					<option value="hot">hot</option>
+				</select>
+			</div>
 			<input type="hidden" placeholder="True" value="True" name="verbose">
 			<input type="hidden" placeholder="False" value="False" name="clear_vote">
-			Items (comments, submitted, overview):<br>
-			<input type="text" placeholder="overview" value="overview" name="item"><br>
-			<br>
-			Trial Run (False means this run will actually delete comments!):<br>
-			<input type="text" placeholder="False" value="False" name="trial_run"><br>
+			<div>
+				<label class="control-label">Items (comments, submitted, overview):</label>
+				<select class="combobox form-control" name="item">
+					<option value="">select which items to delete</option>
+					<option value="overview">overview</option>
+					<option value="submitted">submitted</option>
+					<option value="comments">comments</option>
+				</select>
+			</div>
+			<div>
+				<label class="control-label">Trial Run (False means this run will actually delete comments!):</label>
+				<select class="combobox form-control" name="trial_run">
+					<option value="">enable trial run</option>
+					<option value="True">true</option>
+					<option value="False">false</option>
+				</select>
+			</div>
 			<input type="hidden" placeholder="True" value="True" name="whitelist_distinguished">
 			<input type="hidden" placeholder="True" value="True" name="whitelist_gilded">
 			<input type="hidden" placeholder="False" value="False" name="keep_a_copy">
@@ -40,13 +56,30 @@
 			<input type="hidden" placeholder="DEBUG" value="DEBUG" name="debug">
 			<input type="hidden" name="refresh_token" value=<%=refresh_token%>>
 			<br>
-			<button type="submit">Run</button>
+			<div>
+				<button class="btn btn-default" type="submit">Run</button>
+			</div>
 		</form>
 	</div>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-			$('.combobox').combobox();
+
+			$('#settingsForm')
+				//.formValidation({
+					//framework: 'bootstrap',
+					//icon: {
+						//valid: 'glyphicon glyphicon-ok', 
+						//invalid: 'glyphicon gylphicon-remove',
+						//validating: 'glyphicon glyphicon-refresh'
+					//},
+					//excluded: ':disabled', 
+					//fields: {
+					//}
+				//})
+				.find('[name="sort"],[name="item"],[name="trial_run"]').combobox();
+			//$('.combobox').combobox();
+						
 	});
 </script>
