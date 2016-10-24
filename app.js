@@ -16,6 +16,9 @@ app.use(bodyParser.json());
 //for setting the view engine template type
 app.set('view engine','ejs');
 
+//for mapping public route
+app.use('/regretit', express.static(__dirname + '/public'))
+
 require("jsdom").env("", function(err, window) {     
 	if (err) {         
 		console.error(err);         

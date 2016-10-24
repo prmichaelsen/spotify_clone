@@ -1,9 +1,19 @@
+<!-- CSS -->     
+<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">     
+<link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
 
+<div class="container">
+	<h3>Regretit</h3>
+	Delete reddit posts and comments from your account! You can set the following options:
 
-<h3>Regretit</h3>
-Delete reddit posts and comments that are under 20 points except gilded ones. 
-
-<br><br>
-<a href=<%= login %>>Login via Reddit</a>
-<br>
-<a href='https://github.com/x89/Shreddit'>View Source Code</a>
+	<ul>
+		<li><strong>Hours: </strong>Deletes comments older than this many hours</li>
+		<li><strong>Score Threshold:</strong>Deletes comments with less than this score</li>
+		<li><strong>Sort:  </strong>Select sorting by either new, top, controversial, or hot</li>
+		<li><strong>Items:  </strong>Delete items from comments, submitted, or overview</li>
+		<li><strong>Trial Run:</strong> This allows you to run the script without actually deleting anything. You can see what would have been deleted! Set this to false to actually delete comments!</li>
+	</ul>
+	<a href=<%= login %>>Login via Reddit</a>
+	<br>
+	<a href='https://github.com/x89/Shreddit'>View Source Code</a>
+</div>

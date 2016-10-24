@@ -1,27 +1,35 @@
-
-<form action="run" method="POST">
-	Hours (Deletes comments older than this many hours):<br>
-	<input type="number"  placeholder="24" value="24" name="hours"><br>
-	<br>
-	Score Threshold (Deletes comments with less than this score):<br>
-	<input type="number" placeholder="20" value="20" name="max_score"><br>
-	<br>
-	Sort (new, top, controversial, hot):<br>
-	<input type="text" placeholder="new" value="new" name="sort"><br>
-	<br>
-	<input type="hidden" placeholder="True" value="True" name="verbose">
-	<input type="hidden" placeholder="False" value="False" name="clear_vote">
-	Items (comments, submitted, overview):<br>
-	<input type="text" placeholder="overview" value="overview" name="item"><br>
-	<br>
-	Trial Run (False means this run will actually delete comments!):<br>
-	<input type="text" placeholder="False" value="False" name="trial_run"><br>
-	<input type="hidden" placeholder="True" value="True" name="whitelist_distinguished">
-	<input type="hidden" placeholder="True" value="True" name="whitelist_gilded">
-	<input type="hidden" placeholder="False" value="False" name="keep_a_copy">
-	<input type="hidden" placeholder="/tmp" value="/tmp" name="save_directory">
-	<input type="hidden" placeholder="DEBUG" value="DEBUG" name="debug">
-	<input type="hidden" name="refresh_token" value=<%=refresh_token%>>
-	<br>
-	<button type="submit">Run</button>
-</form>
+<!-- CSS -->     
+<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">     
+<link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
+<div class="container">
+	<h3>Regretit</h3>
+	Delete reddit posts and comments from your account! You can set the following options:
+	<div>
+		<form action="run" method="POST">
+			Hours (Deletes comments older than this many hours):<br>
+			<input type="number"  placeholder="24" value="24" name="hours"><br>
+			<br>
+			Score Threshold (Deletes comments with less than this score):<br>
+			<input type="number" placeholder="20" value="20" name="max_score"><br>
+			<br>
+			Sort (new, top, controversial, hot):<br>
+			<input type="text" placeholder="new" value="new" name="sort"><br>
+			<br>
+			<input type="hidden" placeholder="True" value="True" name="verbose">
+			<input type="hidden" placeholder="False" value="False" name="clear_vote">
+			Items (comments, submitted, overview):<br>
+			<input type="text" placeholder="overview" value="overview" name="item"><br>
+			<br>
+			Trial Run (False means this run will actually delete comments!):<br>
+			<input type="text" placeholder="False" value="False" name="trial_run"><br>
+			<input type="hidden" placeholder="True" value="True" name="whitelist_distinguished">
+			<input type="hidden" placeholder="True" value="True" name="whitelist_gilded">
+			<input type="hidden" placeholder="False" value="False" name="keep_a_copy">
+			<input type="hidden" placeholder="/tmp" value="/tmp" name="save_directory">
+			<input type="hidden" placeholder="DEBUG" value="DEBUG" name="debug">
+			<input type="hidden" name="refresh_token" value=<%=refresh_token%>>
+			<br>
+			<button type="submit">Run</button>
+		</form>
+	</div>
+</div>
