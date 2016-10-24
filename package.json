@@ -1,0 +1,25 @@
+{
+  "name": "regretit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.8.0",
+    "passport": "^0.3.2",
+    "passport-reddit": "^0.2.4",
+    "request": "^2.75.0",
+    "uuid4": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
