@@ -6,6 +6,7 @@ var spawn = require('child_process').spawn;
 var http = require('http');
 var request = require('request');
 var uuid = require('uuid4'); 
+var mongoClient = require('mongodb').MongoClient;
 
 //for parsing req body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -26,9 +27,13 @@ require("jsdom").env("", function(err, window) {
 	}      
 	var $ = require("jquery")(window); 
 
-	CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
-	CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
-	REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
+	const CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
+	const CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
+	const REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
+	const MONGO_USER = process.env.REGRETIT_MONGO_USER;
+	const MONGO_PASSWORD = process.env.REGRETIT_MONGO_PASSWORD;
+	const MONGO_HOST = process.env.REGRETIT_MONGO_HOST;
+	const mongodbUri = 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+MONGO_HOST;
 
 app.get('/regretit/', function (req,res){
 	//build authorize request
@@ -70,8 +75,16 @@ app.get('/regretit/reddit_callback', function (req, res) {
 
 });
 
-app.listen(process.env.REGRETIT_PORT, function() {
-	console.log('Listening...');
-});
+mongoClient.connect(
+		mongodbUri,
+		(err,database)=>{
+			db = database;		
+
+			app.listen(process.env.REGRETIT_PORT, function(){
+				console.log(
+					"Express server listening on port %d",process.env.REGRETIT_PORT)
+			});
+		});
+
 
 });
