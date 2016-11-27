@@ -7,6 +7,10 @@ var http = require('http');
 var request = require('request');
 var uuid = require('uuid4'); 
 var mongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
+var passport = require('passport'); 
+var flash = require('connect-flash');
+var session = require('express-session');
 
 //for parsing req body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -16,6 +20,12 @@ app.use(bodyParser.json());
 
 //for setting the view engine template type
 app.set('view engine','ejs');
+
+app.use(session({secret: process.env.REGRETIT_SESSION_SECRET}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 
 //for mapping public route
 app.use('/regretit', express.static(__dirname + '/public'))
@@ -35,56 +45,52 @@ require("jsdom").env("", function(err, window) {
 	const MONGO_HOST = process.env.REGRETIT_MONGO_HOST;
 	const mongodbUri = 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+MONGO_HOST;
 
-app.get('/regretit/', function (req,res){
-	//build authorize request
-	var state = uuid();
-	var params = {"client_id": CLIENT_ID,
-		"response_type": "code",
-	"state": state,
-	"redirect_uri": REDIRECT_URI,
-	"duration": "permanent",
-	"scope": "identity edit read history"};
-	var login = "https://ssl.reddit.com/api/v1/authorize?" + $.param(params); 
-	res.render("index.ejs", {login: login});
-});
+	mongoose.connect(mongodbUri);
 
-app.post('/regretit/run', function (req,res){
-	console.log(req.body);
-	var py = spawn('python',['/home/user/shreddit/shreddit.py','-j',JSON.stringify(req.body)])
-	py.stdout.on('data', function(data) { 
-		console.log('stdout: '+ data);
-		res.write('stdout: '+ data);
+	app.get('/regretit/', function (req,res){
+		//build authorize request
+		var state = uuid();
+		var params = {"client_id": CLIENT_ID,
+			"response_type": "code",
+		"state": state,
+		"redirect_uri": REDIRECT_URI,
+		"duration": "permanent",
+		"scope": "identity edit read history"};
+		var login = "https://ssl.reddit.com/api/v1/authorize?" + $.param(params); 
+		res.render("index.ejs", {login: login});
 	});
-py.on('close' , function(code){
-	res.end();
-});
-});
 
-
-app.get('/regretit/reddit_callback', function (req, res) {
-	if(req.query.code){
-		var py = spawn('python',['/home/user/regretit/get_oauth.py',req.query.code]);
+	app.post('/regretit/run', function (req,res){
+		console.log(req.body);
+		var py = spawn('python',['/home/user/shreddit/shreddit.py','-j',JSON.stringify(req.body)])
 		py.stdout.on('data', function(data) { 
-			res.render('settings', { refresh_token: data });
+			console.log('stdout: '+ data);
+			res.write('stdout: '+ data);
 		});
-	}
-	else if(req.query.error)
+	py.on('close' , function(code){
+		res.end();
+	});
+	});
+
+
+	app.get('/regretit/reddit_callback', function (req, res) {
+		if(req.query.code){
+			var py = spawn('python',['/home/user/regretit/get_oauth.py',req.query.code]);
+			py.stdout.on('data', function(data) { 
+				res.render('settings', { refresh_token: data });
+			});
+		}
+		else if(req.query.error)
 	{
 		res.redirect('/regretit/');
 	}
 
-});
+	});
 
-mongoClient.connect(
-		mongodbUri,
-		(err,database)=>{
-			db = database;		
 
-			app.listen(process.env.REGRETIT_PORT, function(){
-				console.log(
-					"Express server listening on port %d",process.env.REGRETIT_PORT)
-			});
-		});
-
+	app.listen(process.env.REGRETIT_PORT, function(){
+		console.log(
+			"Express server listening on port %d",process.env.REGRETIT_PORT)
+	});
 
 });
