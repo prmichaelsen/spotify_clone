@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-parser'); //require BEFORE express()
+var bodyParser = require('body-parser'); //require BEFORE express() call
 var app = express();
 var util  = require('util');
 var spawn = require('child_process').spawn;
@@ -45,9 +45,21 @@ require("jsdom").env("", function(err, window) {
 	mongoose.connect(mongodbUri);
 
 	app.get('/spotify/', function (req,res){
-		res.render("index", { name : "index"});
+		var page = "master"
+		res.render(page, { name : page });
 	}); 
 
+	app.post('/spotify/content/', function (req,res){
+		var page = "content"
+		console.log(req.body);
+		res.render(page, { name : page, view: req.body });
+	}); 
+
+	app.post('/spotify/navigation/', function (req,res){
+		var page = "navigation"
+		console.log(req.body);
+		res.render(page, { name : page, view: req.body });
+	}); 
 
 	app.listen(process.env.SPOTIFY_CLONE_PORT, function(){
 		console.log(

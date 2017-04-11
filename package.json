@@ -13,6 +13,7 @@
     "body-parser": "^1.15.2",
     "bootstrap-combobox": "^1.0.2",
     "bower": "^1.7.9",
+    "browserify": "^14.3.0",
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
