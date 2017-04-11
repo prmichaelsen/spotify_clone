@@ -37,12 +37,12 @@ require("jsdom").env("", function(err, window) {
 	}      
 	var $ = require("jquery")(window); 
 
-	const CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
-	const CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
-	const REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
-	const MONGO_USER = process.env.REGRETIT_MONGO_USER;
-	const MONGO_PASSWORD = process.env.REGRETIT_MONGO_PASSWORD;
-	const MONGO_HOST = process.env.REGRETIT_MONGO_HOST;
+	//const CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
+	//const CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
+	//const REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
+	const MONGO_USER = process.env.SPOTIFY_CLONE_USER;
+	const MONGO_PASSWORD = process.env.SPOTIFY_CLONE_PORT;
+	const MONGO_HOST = process.env.SPOTIFY_CLONE_HOST;
 	const mongodbUri = 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+MONGO_HOST;
 
 	mongoose.connect(mongodbUri);
@@ -88,9 +88,9 @@ require("jsdom").env("", function(err, window) {
 	});
 
 
-	app.listen(process.env.REGRETIT_PORT, function(){
+	app.listen(process.env.SPOTIFY_CLONE_PORT, function(){
 		console.log(
-			"Express server listening on port %d",process.env.REGRETIT_PORT)
+			"Express server listening on port %d",process.env.SPOTIFY_CLONE_PORT)
 	});
 
 });
