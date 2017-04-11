@@ -28,7 +28,7 @@ app.use(flash());
 
 
 //for mapping public route
-app.use('/regretit', express.static(__dirname + '/public'))
+app.use('/spotify', express.static(__dirname + '/public'))
 
 require("jsdom").env("", function(err, window) {     
 	if (err) {         
@@ -39,28 +39,28 @@ require("jsdom").env("", function(err, window) {
 
 	//const CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
 	//const CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
-	//const REDIRECT_URI = "http://www.patrickmichaelsen.com/regretit/reddit_callback";
-	const MONGO_USER = process.env.SPOTIFY_CLONE_USER;
-	const MONGO_PASSWORD = process.env.SPOTIFY_CLONE_PORT;
-	const MONGO_HOST = process.env.SPOTIFY_CLONE_HOST;
+	//const REDIRECT_URI = "http://www.patrickmichaelsen.com/spotify/reddit_callback";
+	const MONGO_USER = process.env.REGRETIT_MONGO_USER;
+	const MONGO_PASSWORD = process.env.REGRETIT_MONGO_PASSWORD;
+	const MONGO_HOST = process.env.REGRETIT_MONGO_HOST;
 	const mongodbUri = 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+MONGO_HOST;
 
 	mongoose.connect(mongodbUri);
 
-	app.get('/regretit/', function (req,res){
+	app.get('/spotify/', function (req,res){
 		//build authorize request
 		var state = uuid();
-		var params = {"client_id": CLIENT_ID,
+		var params = {
 			"response_type": "code",
 		"state": state,
-		"redirect_uri": REDIRECT_URI,
+		
 		"duration": "permanent",
 		"scope": "identity edit read history"};
 		var login = "https://ssl.reddit.com/api/v1/authorize?" + $.param(params); 
 		res.render("index.ejs", {login: login});
 	});
 
-	app.post('/regretit/run', function (req,res){
+	app.post('/spotify/run', function (req,res){
 		console.log(req.body);
 		var py = spawn('python',['/home/user/shreddit/shreddit.py','-j',JSON.stringify(req.body)])
 		py.stdout.on('data', function(data) { 
@@ -73,16 +73,16 @@ require("jsdom").env("", function(err, window) {
 	});
 
 
-	app.get('/regretit/reddit_callback', function (req, res) {
+	app.get('/spotify/reddit_callback', function (req, res) {
 		if(req.query.code){
-			var py = spawn('python',['/home/user/regretit/get_oauth.py',req.query.code]);
+			var py = spawn('python',['/home/user/spotify/get_oauth.py',req.query.code]);
 			py.stdout.on('data', function(data) { 
 				res.render('settings', { refresh_token: data });
 			});
 		}
 		else if(req.query.error)
 	{
-		res.redirect('/regretit/');
+		res.redirect('/spotify/');
 	}
 
 	});
