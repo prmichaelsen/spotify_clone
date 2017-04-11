@@ -37,9 +37,6 @@ require("jsdom").env("", function(err, window) {
 	}      
 	var $ = require("jquery")(window); 
 
-	//const CLIENT_ID = process.env.REGRETIT_CLIENT_ID;
-	//const CLIENT_SECRET =   process.env.REGRETIT_CLIENT_SECRET;
-	//const REDIRECT_URI = "http://www.patrickmichaelsen.com/spotify/reddit_callback";
 	const MONGO_USER = process.env.REGRETIT_MONGO_USER;
 	const MONGO_PASSWORD = process.env.REGRETIT_MONGO_PASSWORD;
 	const MONGO_HOST = process.env.REGRETIT_MONGO_HOST;
@@ -48,44 +45,8 @@ require("jsdom").env("", function(err, window) {
 	mongoose.connect(mongodbUri);
 
 	app.get('/spotify/', function (req,res){
-		//build authorize request
-		var state = uuid();
-		var params = {
-			"response_type": "code",
-		"state": state,
-		
-		"duration": "permanent",
-		"scope": "identity edit read history"};
-		var login = "https://ssl.reddit.com/api/v1/authorize?" + $.param(params); 
-		res.render("index.ejs", {login: login});
-	});
-
-	app.post('/spotify/run', function (req,res){
-		console.log(req.body);
-		var py = spawn('python',['/home/user/shreddit/shreddit.py','-j',JSON.stringify(req.body)])
-		py.stdout.on('data', function(data) { 
-			console.log('stdout: '+ data);
-			res.write('stdout: '+ data);
-		});
-	py.on('close' , function(code){
-		res.end();
-	});
-	});
-
-
-	app.get('/spotify/reddit_callback', function (req, res) {
-		if(req.query.code){
-			var py = spawn('python',['/home/user/spotify/get_oauth.py',req.query.code]);
-			py.stdout.on('data', function(data) { 
-				res.render('settings', { refresh_token: data });
-			});
-		}
-		else if(req.query.error)
-	{
-		res.redirect('/spotify/');
-	}
-
-	});
+		res.render("index", { name : "index"});
+	}); 
 
 
 	app.listen(process.env.SPOTIFY_CLONE_PORT, function(){
