@@ -15,7 +15,7 @@
     "bower": "^1.7.9",
     "browserify": "^14.3.0",
     "connect-flash": "^0.1.1",
-    "ejs": "^2.5.2",
+    "ejs": "^2.5.6",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "jquery": "^3.1.1",

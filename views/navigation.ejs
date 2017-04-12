@@ -1,16 +1,20 @@
 <div class="navigation_bar row">
 	<div class="history col-xs-3">
-		<div class="back col-xs-1">
-			<
-		</div>
-		<div class="forward col-xs-1">
-			>
-		</div>
 	</div>
 	<div class="location col-xs-6">
 		<%= view.location %>
 	</div>
-	<div class="menu col-xs-3">
+	<% if ( view.location === "Home" ) { %>
+	<div id="menu_btn" class="menu col-xs-3">
 		Menu
 	</div>
+	<% } else if ( view.location === "Menu" ) { %>
+	<div id="home_btn" class="menu col-xs-3">
+		X
+	</div> 
+	<% } else { -%>
+	<div id="menu_btn" class="menu col-xs-3">
+		Menu
+	</div> 
+	<% } %> 
 </div>

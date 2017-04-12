@@ -1,0 +1,26 @@
+<div class="song_item">
+	<div class="song_info ">
+		<div class="song_title ">
+			<% if (view.songs[i].song_title) {%>
+			<%= view.songs[i].song_title %>
+			<% } else { %> 
+			Song Title
+			<% } %> 
+		</div>
+		<span class="artist_title ">
+			<% if (view.songs[i].artist_title) {%>
+			<%= view.songs[i].artist_title %>
+			<% } else { %> 
+			Artist Title
+			<% } %> 
+		</span>
+		- 
+		<span class="view.songs[i].album_title ">
+			<% if (album_title) {%>
+			<%= view.songs[i].album_title %>
+			<% } else { %> 
+			Album Title
+			<% } %> 
+		</span> 
+	</div>
+</div>

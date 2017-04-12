@@ -1,4 +1,11 @@
+<% if (view.location === "Home" ) { %>
+<%- include('home') %>
+<% } %>
 
-this is content
+<% if (view.location === "Menu" ) { %>
+<%- include('menu') %>
+<% } %>
 
-<%= view.my_item %>
+<% if (view.location === "Songs" ) { %>
+<%- include('songs') %>
+<% } %>

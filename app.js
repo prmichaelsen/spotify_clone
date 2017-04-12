@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 var passport = require('passport'); 
 var flash = require('connect-flash');
 var session = require('express-session');
+var ejs = require('ejs');
 
 //for parsing req body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,9 +45,11 @@ require("jsdom").env("", function(err, window) {
 
 	mongoose.connect(mongodbUri);
 
+
 	app.get('/spotify/', function (req,res){
 		var page = "master"
-		res.render(page, { name : page });
+		console.log(req.body);
+		res.render(page,{ name : page, view: req.body });
 	}); 
 
 	app.post('/spotify/content/', function (req,res){
@@ -57,6 +60,12 @@ require("jsdom").env("", function(err, window) {
 
 	app.post('/spotify/navigation/', function (req,res){
 		var page = "navigation"
+		console.log(req.body);
+		res.render(page, { name : page, view: req.body });
+	}); 
+
+	app.post('/spotify/player/', function (req,res){
+		var page = "player"
 		console.log(req.body);
 		res.render(page, { name : page, view: req.body });
 	}); 

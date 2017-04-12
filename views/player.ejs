@@ -1,0 +1,38 @@
+<div class="player_bar ">
+	<div class="controls_bar ">
+		<div class="shuffle col-xs-3">
+			S
+		</div>
+		<div class="col-xs-2" id="skip_back"> 
+			|<
+		</div> 
+		<div class="col-xs-2" id="play_pause"> 
+			P
+		</div> 
+		<div class="col-xs-2" id="skip_forward"> 
+			>|
+		</div> 
+		<div class="loop col-xs-1">
+			L
+		</div>
+		<div class="loop col-xs-1">
+			Q
+		</div>
+	</div>
+	<div class="song_info ">
+		<div class="song_title ">
+			<% if (view.song_title) {%>
+				<%= view.song_title %>
+			<% } else { %> 
+				Song Title
+			<% } %> 
+		</div>
+		<div class="artist_title ">
+			<% if (view.artist_title) {%>
+				<%= view.artist_title %>
+			<% } else { %> 
+				Artist Title
+			<% } %> 
+		</div>
+	</div>
+</div>

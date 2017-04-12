@@ -1,10 +1,60 @@
-
 .navigation_bar {
 	padding-top: 12px;
-	padding-bottom: 12px; 
 	color: white;
 	font-weight: bold;
+	overflow: hidden;
 	text-align: center;
 }
 
+.navigation {
+	height: 8%; 
+}
 
+.content {
+	height: 77%;
+}
+
+.player {
+	height: 13%;
+	padding-left: 5px;
+	padding-right: 5px; 
+	overflow: hidden;
+}
+
+.player_bar {
+}
+
+.controls_bar {
+	height: 20%;
+	margin-top: 5px;
+	margin-bottom: 12px;
+}
+
+.player_bar .song_info {
+	height: 75%;
+}
+
+.song_title {
+	color: white;
+	font-size: small;
+	max-height: 56%;
+	overflow: hidden;
+}
+
+.artist_title { 
+	font-size: smaller;
+}
+
+.container {
+	max-height: 100px;
+}
+
+.history .spacer{
+	width: 50px;
+}
+
+.menu_item {
+
+	color: white;
+	font-size: medium;
+}

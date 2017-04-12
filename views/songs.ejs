@@ -1,0 +1,35 @@
+<% if (view.songs.length > 0 ) { %>
+	<% for(var i=0; i<view.songs.length; i++) {%>
+	<div class="song_item">
+		<div class="song_info ">
+			<div class="song_title ">
+				<% if (view.songs[i].song_title) {%>
+					<%= view.songs[i].song_title %>
+				<% } else { %> 
+					Song Title
+				<% } %> 
+			</div>
+			<span class="artist_title ">
+				<% if (view.songs[i].artist_title) {%>
+					<%= view.songs[i].artist_title %>
+				<% } else { %> 
+					Artist Title
+				<% } %> 
+			</span>
+			- 
+			<span class="album_title ">
+				<% if (view.songs[i].album_title) {%>
+					<%= view.songs[i].album_title %>
+				<% } else { %> 
+					Album Title
+				<% } %> 
+			</span> 
+		</div>
+	</div>
+	<% if (i < view.songs.length - 1 ) { %>
+		<hr>
+	<%}%>
+<%}%>
+<% } else { %>
+	No Songs Found
+<% } %>
