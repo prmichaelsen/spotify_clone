@@ -1,10 +1,11 @@
+<% if (view.location === "Menu" ) { %>
+<%- include('menu') %>
+<% } %>
+
 <% if (view.location === "Home" ) { %>
 <%- include('home') %>
 <% } %>
 
-<% if (view.location === "Menu" ) { %>
-<%- include('menu') %>
-<% } %>
 
 <% if (view.location === "Songs" ) { %>
 <%- include('songs') %>

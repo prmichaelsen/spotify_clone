@@ -1,7 +1,7 @@
 <% if (view.songs.length > 0 ) { %>
 	<% for(var i=0; i<view.songs.length; i++) {%>
-	<div class="song_item">
-		<div class="song_info ">
+	<div class="song_item clearfix">
+		<div class="song_info col-xs-10">
 			<div class="song_title ">
 				<% if (view.songs[i].song_title) {%>
 					<%= view.songs[i].song_title %>
@@ -25,6 +25,16 @@
 				<% } %> 
 			</span> 
 		</div>
+		<div class="col-xs-1"/>
+		<% if ( (view.current_song.id === view.songs[i].id) && (view.current_song.playing == true) ) { %>
+			<div class="play_song col-xs-1" >
+				<i class="fa  fa-pause-circle-o fa-lg"/>
+			</div>
+		<% } else { %>
+			<div class="play_song col-xs-1" >
+				<i class="fa fa-play-circle-o fa-lg"/>
+			</div>
+		<% } %>
 	</div>
 	<% if (i < view.songs.length - 1 ) { %>
 		<hr>

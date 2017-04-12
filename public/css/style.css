@@ -3,6 +3,21 @@
 	color: white;
 	font-weight: bold;
 	overflow: hidden;
+} 
+
+.clearfix {
+	margin-left: -15px;
+}
+
+.navigation_bar .location {
+	text-align: center;
+}
+
+.navigation_bar .menu .fa {
+	margin-top: 2px;
+}
+
+.navigation_bar .menu {
 	text-align: center;
 }
 
@@ -16,9 +31,6 @@
 
 .player {
 	height: 13%;
-	padding-left: 5px;
-	padding-right: 5px; 
-	overflow: hidden;
 }
 
 .player_bar {
@@ -30,18 +42,30 @@
 	margin-bottom: 12px;
 }
 
+.controls_bar .col-xs-1 {
+	text-align: center;
+}
+
 .player_bar .song_info {
 	height: 75%;
+}
+
+#play_pause{
+	text-align: center;
 }
 
 .song_title {
 	color: white;
 	font-size: small;
 	max-height: 56%;
-	overflow: hidden;
+	overflow-y: hidden;
 }
 
 .artist_title { 
+	font-size: smaller;
+}
+
+.album_title { 
 	font-size: smaller;
 }
 
@@ -49,12 +73,19 @@
 	max-height: 100px;
 }
 
-.history .spacer{
-	width: 50px;
+.content {
+	margin-top: 1%;
 }
 
-.menu_item {
-
+.menu_item { 
 	color: white;
 	font-size: medium;
+}
+
+.song_item .play_song {
+	padding-top: 2%;
+}
+
+.song_item .col-xs-1 {
+	text-align: center;
 }

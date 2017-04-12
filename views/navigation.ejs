@@ -1,20 +1,17 @@
-<div class="navigation_bar row">
-	<div class="history col-xs-3">
+<div class="navigation_bar clearfix">
+	<div class="col-xs-2">
 	</div>
-	<div class="location col-xs-6">
+	<div class="location col-xs-8">
 		<%= view.location %>
 	</div>
-	<% if ( view.location === "Home" ) { %>
-	<div id="menu_btn" class="menu col-xs-3">
-		Menu
-	</div>
-	<% } else if ( view.location === "Menu" ) { %>
-	<div id="home_btn" class="menu col-xs-3">
-		X
+	<div class="col-xs-1"/>
+	<% if ( view.location  == "Menu" ) { %>
+	<div id="home_btn" class="menu col-xs-1">
+				<i class="fa fa-minus fa-lg"/>
 	</div> 
-	<% } else { -%>
-	<div id="menu_btn" class="menu col-xs-3">
-		Menu
+	<% } else { %>
+	<div id="menu_btn" class="menu col-xs-1">
+		<i class="fa fa-bars fa-lg"/>
 	</div> 
 	<% } %> 
 </div>

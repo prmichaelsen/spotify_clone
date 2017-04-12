@@ -1,35 +1,40 @@
 <div class="player_bar ">
-	<div class="controls_bar ">
+	<div class="controls_bar clearfix">
 		<div class="shuffle col-xs-3">
-			S
+				<i class="fa fa-random "/>
 		</div>
-		<div class="col-xs-2" id="skip_back"> 
-			|<
+		<div class="col-xs-1" id="skip_back"> 
+				<i class="fa fa-step-backward "/>
 		</div> 
-		<div class="col-xs-2" id="play_pause"> 
-			P
+		<div class="col-xs-4" id="play_pause"> 
+		<% if ( view.current_song.playing == true ) { %>
+				<i class="fafa-pause "/>
+		<% } else { %>
+				<i class="fa fa-play "/>
+		<% } %>
 		</div> 
-		<div class="col-xs-2" id="skip_forward"> 
-			>|
+		<div class="col-xs-1" id="skip_forward"> 
+				<i class="fa fa-step-forward "/>
 		</div> 
+		<div class="col-xs-1"/>
 		<div class="loop col-xs-1">
-			L
+				<i class="fa fa-repeat "/>
 		</div>
 		<div class="loop col-xs-1">
-			Q
+				<i class="fa fa-list "/>
 		</div>
 	</div>
-	<div class="song_info ">
-		<div class="song_title ">
-			<% if (view.song_title) {%>
-				<%= view.song_title %>
+	<div class="song_info clearfix">
+		<div class="song_title col-xs-12">
+			<% if (view.current_song.song_title) {%>
+				<%= view.current_song.song_title %>
 			<% } else { %> 
 				Song Title
 			<% } %> 
 		</div>
-		<div class="artist_title ">
-			<% if (view.artist_title) {%>
-				<%= view.artist_title %>
+		<div class="artist_title col-xs-12">
+			<% if (view.current_song.artist_title) {%>
+				<%= view.current_song.artist_title %>
 			<% } else { %> 
 				Artist Title
 			<% } %> 
