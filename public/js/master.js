@@ -10,7 +10,7 @@ $(document).ready(()=>{
 	app.set("location", "Songs");
 
 	call_get("songs", {}, function(data){
-		app.state.songs = data;
+		app.state.songs = (data)? data : [];
 		render();
 	});
 
