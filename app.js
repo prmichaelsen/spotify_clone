@@ -64,9 +64,9 @@ require("jsdom").env("", function(err, window) {
 		});
 	});
 
-	app.post('/spotify/play', function(req,res){ 
+	app.post('/spotify/song', function(req,res){ 
 		var view = req.body;
-		Songs.findOne({"_id":view.current_song.id }, function(err, song) {
+		Songs.findOne({"_id":view.current_song._id }, function(err, song) {
 			// In case of any error, return using the done method
 			if (err){
 				console.log("err",err);
@@ -74,17 +74,11 @@ require("jsdom").env("", function(err, window) {
 			}
 			// already exists
 			if (song) {
-				view.current_song.song_title = song.song_title;
-				view.current_song.album_title = song.album_title;
-				view.current_song.artist_title = song.artist_title;
-				view.current_song.id = song._id;
-				console.log("song",song);
+				return res.json(song);
 			} else {
 				console.log("no such song");
 			}
 		});
-		var page = "reload"
-		res.render(page, { name : page, view: req.body });
 	});
 
 	app.listen(process.env.SPOTIFY_CLONE_PORT, function(){

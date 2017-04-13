@@ -27,7 +27,7 @@ var app = {
 			song_title: "R U Mine?",
 			artist_title: "Arctic Monkeys",
 			album_title: "A.M.", 
-			id: 3,
+			_id: 3,
 		},
 		songs: [], 
 	},
@@ -50,8 +50,8 @@ var reload = function(name, data, callback){
 	}); 
 } 
 
-var render = function(callback){ 
-	reload("reload",app.state,callback);
+var render = function(){ 
+	reload("reload",app.state,attach_events);
 }
 
 var call_get = function(route, data, callback){
@@ -59,6 +59,17 @@ var call_get = function(route, data, callback){
 		url: "http://patrickmichaelsen.com/spotify/"+route,
 		data: data, 
 		type: "GET",
+		success: (json)=>{
+			callback(json);
+		}
+	}); 
+}
+
+var call_post = function(route, data, callback){
+	$.ajax({
+		url: "http://patrickmichaelsen.com/spotify/"+route,
+		data: data, 
+		type: "POST",
 		success: (json)=>{
 			callback(json);
 		}
@@ -91,7 +102,10 @@ var attach_events = function(){
 		$(".play_song").on('click', function(event){ 
 			app.state.playing = true;
 			app.state.current_song._id = $(event.currentTarget).data("song-id");
-			reload("play", app.state, attach_events);
+			call_post("song", app.state, function GetSong(song){
+				app.state.current_song = song;
+				render();
+			});
 		}); 
 
 		$(".pause_song").on('click', function(event){ 
