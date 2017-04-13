@@ -53,6 +53,34 @@ var app = {
 				album_title: "Whatever People Say That's What I'm Not", 
 				id: 3,
 			},
+
+			{
+				song_title: "You Probably Couldn't See for the Lights But You Were Looking Right at Me",
+				artist_title: "Arctic Monkeys",
+				album_title: "Whatever People Say That's What I'm Not", 
+				id: 3,
+			},
+
+			{
+				song_title: "You Probably Couldn't See for the Lights But You Were Looking Right at Me",
+				artist_title: "Arctic Monkeys",
+				album_title: "Whatever People Say That's What I'm Not", 
+				id: 3,
+			},
+
+			{
+				song_title: "You Probably Couldn't See for the Lights But You Were Looking Right at Me",
+				artist_title: "Arctic Monkeys",
+				album_title: "Whatever People Say That's What I'm Not", 
+				id: 3,
+			},
+
+			{
+				song_title: "You Probably Couldn't See for the Lights But You Were Looking Right at Me",
+				artist_title: "Arctic Monkeys",
+				album_title: "Whatever People Say That's What I'm Not", 
+				id: 3,
+			},
 		],
 	},
 };

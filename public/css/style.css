@@ -1,3 +1,7 @@
+html, body {
+	overflow: hidden;
+}
+
 .navigation_bar {
 	padding-top: 12px;
 	color: white;
@@ -27,6 +31,8 @@
 
 .content {
 	height: 77%;
+	overflow-y: overlay;
+	overflow-x: hidden;
 }
 
 .player {
@@ -38,7 +44,7 @@
 
 .controls_bar {
 	height: 20%;
-	margin-top: 5px;
+	margin-top: 12px;
 	margin-bottom: 12px;
 }
 
@@ -89,3 +95,32 @@
 .song_item .col-xs-1 {
 	text-align: center;
 }
+
+::-webkit-scrollbar
+{
+	width: 10px;  /* for vertical scrollbars */
+	height: 10px; /* for horizontal scrollbars */
+	display: none;
+}
+
+/*
+::-webkit-scrollbar-track:hover
+{
+	display: inherit;
+} 
+
+::-webkit-scrollbar-track
+{
+	display: none;
+} 
+
+::-webkit-scrollbar-thumb
+{
+	background: grey; 
+	display: none;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+	display: inherit;
+}*/
