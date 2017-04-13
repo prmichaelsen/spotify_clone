@@ -90,7 +90,7 @@ var attach_events = function(){
 
 		$(".play_song").on('click', function(event){ 
 			app.state.playing = true;
-			app.state.current_song.id = $(event.currentTarget).data("song-id");
+			app.state.current_song._id = $(event.currentTarget).data("song-id");
 			reload("play", app.state, attach_events);
 		}); 
 
