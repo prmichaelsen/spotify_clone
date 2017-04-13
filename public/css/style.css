@@ -88,6 +88,7 @@ html, body {
 	font-size: medium;
 }
 
+.song_item .pause_song,
 .song_item .play_song {
 	padding-top: 2%;
 }

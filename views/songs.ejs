@@ -26,12 +26,12 @@
 			</span> 
 		</div>
 		<div class="col-xs-1"/>
-		<% if ( (view.current_song.id === view.songs[i].id) && (view.current_song.playing == true) ) { %>
-			<div class="play_song col-xs-1" >
-				<i class="fa  fa-pause-circle-o fa-lg"/>
+		<% if ( (view.current_song.id === view.songs[i].id) && (view.playing === 'true') ) { %>
+			<div class="pause_song col-xs-1" data-song-id="<%= view.songs[i].id %>">
+				<i class="fa fa-pause-circle-o fa-lg"/>
 			</div>
 		<% } else { %>
-			<div class="play_song col-xs-1" >
+			<div class="play_song col-xs-1" data-song-id="<%= view.songs[i].id %>">
 				<i class="fa fa-play-circle-o fa-lg"/>
 			</div>
 		<% } %>

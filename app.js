@@ -8,6 +8,7 @@ var request = require('request');
 var uuid = require('uuid4'); 
 var mongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
+var Songs = require('./models/song');
 var passport = require('passport'); 
 var flash = require('connect-flash');
 var session = require('express-session');
@@ -48,27 +49,43 @@ require("jsdom").env("", function(err, window) {
 
 	app.get('/spotify/', function (req,res){
 		var page = "master"
-		console.log(req.body);
 		res.render(page,{ name : page, view: req.body });
 	}); 
 
-	app.post('/spotify/content/', function (req,res){
-		var page = "content"
-		console.log(req.body);
+	app.post('/spotify/reload/', function (req,res){
+		var page = "reload"
 		res.render(page, { name : page, view: req.body });
 	}); 
 
-	app.post('/spotify/navigation/', function (req,res){
-		var page = "navigation"
-		console.log(req.body);
-		res.render(page, { name : page, view: req.body });
-	}); 
+	/* Handle get search data */
+	app.get('/spotify/songs', function(req, res) { 
+		Songs.find({},function(err, results) { 
+			return res.json(results);
+		});
+	});
 
-	app.post('/spotify/player/', function (req,res){
-		var page = "player"
-		console.log(req.body);
+	app.post('/spotify/play', function(req,res){ 
+		var view = req.body;
+		Songs.findOne({"_id":view.current_song.id }, function(err, song) {
+			// In case of any error, return using the done method
+			if (err){
+				console.log("err",err);
+				return;
+			}
+			// already exists
+			if (song) {
+				view.current_song.song_title = song.song_title;
+				view.current_song.album_title = song.album_title;
+				view.current_song.artist_title = song.artist_title;
+				view.current_song.id = song._id;
+				console.log("song",song);
+			} else {
+				console.log("no such song");
+			}
+		});
+		var page = "reload"
 		res.render(page, { name : page, view: req.body });
-	}); 
+	});
 
 	app.listen(process.env.SPOTIFY_CLONE_PORT, function(){
 		console.log(
