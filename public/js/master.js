@@ -18,6 +18,11 @@ $(document).ready(()=>{
 		attach_events(); 
 	}); 
 
+	var audio = new Audio('https://s3-us-west-1.amazonaws.com/patrickmichaelsen/Miami+Viceroy.mp3');
+	app.audio = audio;
+	audio.loop = true;
+	//audio.play();
+
 });
 
 var app = {
@@ -39,12 +44,14 @@ var defined = function(variable){
 
 var reload = function(name, data, callback){
 	data.name = "reload";
+	var content_scroll = $('.content').scrollTop();
 	$.ajax({
 		url: "http://patrickmichaelsen.com/spotify/"+name,
 		data, 
 		type: "POST",
 		success: (html)=>{
 			$(".reload").html(html); 
+			$('.content').scrollTop(content_scroll);
 			callback();
 		}
 	}); 
