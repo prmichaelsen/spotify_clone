@@ -31,7 +31,7 @@
 				<i class="fa fa-pause-circle-o fa-lg"/>
 			</div>
 		<% } else { %>
-			<div class="play_song col-xs-1" data-song-id="<%= view.songs[i]._id %>">
+		<div class="play_song col-xs-1 <% if (view.current_song._id === view.songs[i]._id ) {%> active_item <% } %>" data-song-id="<%= view.songs[i]._id %>">
 				<i class="fa fa-play-circle-o fa-lg"/>
 			</div>
 		<% } %>
