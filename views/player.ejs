@@ -1,9 +1,9 @@
 <div class="player_bar ">
 	<div class="controls_bar clearfix">
-		<div class="shuffle col-xs-3">
-				<i class="fa fa-random "/>
+		<div id="shuffle_btn" class="shuffle col-xs-3">
+			<i class="fa fa-random <% if ( view.shuffle === 'true' ) {%> active_item <%}%>"/>
 		</div>
-		<div class="col-xs-1" id="skip_back"> 
+		<div id="skip_back_btn" class="col-xs-1" id="skip_back"> 
 				<i class="fa fa-step-backward "/>
 		</div> 
 		<div class="col-xs-4" id="play_pause"> 
@@ -13,14 +13,14 @@
 				<i class="fa fa-play "/>
 		<% } %>
 		</div> 
-		<div class="col-xs-1" id="skip_forward"> 
+		<div id="skip_forward_btn" class="col-xs-1" id="skip_forward"> 
 				<i class="fa fa-step-forward "/>
 		</div> 
 		<div class="col-xs-1"/>
-		<div class="loop col-xs-1">
+			<div id="loop_btn" class="loop col-xs-1 <% if ( view.loop === 'true' ) { %> active_item <% } %>">
 				<i class="fa fa-repeat "/>
 		</div>
-		<div class="loop col-xs-1">
+		<div class="queue col-xs-1">
 				<i class="fa fa-list "/>
 		</div>
 	</div>

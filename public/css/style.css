@@ -125,3 +125,7 @@ html, body {
 {
 	display: inherit;
 }*/
+
+.active_item {
+	color: limegreen;
+}

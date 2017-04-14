@@ -1,4 +1,3 @@
-
 $(document).ready(()=>{ 
 
 	app.set = function(prop, value){
@@ -11,7 +10,12 @@ $(document).ready(()=>{
 
 	call_get("songs", {}, function(data){
 		app.state.songs = (data)? data : [];
-		render();
+		app.state.queue.songs = (data)? data : new Array();
+		app.state.current_song = (app.state.songs.length) ? app.state.songs[0] : {};
+		call_post("song", app.state, function GetSong(song){
+			app.state.current_song = song;
+			render();
+		});
 	});
 
 	reload("reload", app.state, function(){
@@ -24,19 +28,41 @@ var app = {
 	state: {
 		playing: false,
 		loop: false,
-		current_song: {
-			song_title: "R U Mine?",
-			artist_title: "Arctic Monkeys",
-			album_title: "A.M.", 
-			_id: '58eee43c734d1d271d386885',
-		},
+		shuffle: false,
+		current_song: {},
 		songs: [], 
+		queue: {
+			position: 0,
+			songs: [],
+		},
 	},
 	audio: {},
 };
 
+//app.state.queue.set = function ( songs ){
+	//app.state.queue.songs = songs;
+//}
+
+//app.state.queue.add = function( song ){
+	//app.state.queue.songs.push(song); 
+//}
+
+
 var defined = function(variable){
 	return !(typeof(variable) === 'undefined');
+}
+
+var playNext = function( ){
+	if(defined(app.state.queue.songs)){
+		app.state.queue.position += 1;
+		if(app.state.queue.position < app.state.queue.songs.length){
+			app.state.current_song._id = app.state.queue.songs[app.state.queue.position]._id;
+			call_post("song", app.state, function GetSong(song){
+				app.state.current_song = song;
+				render();
+			});
+		} 
+	} 
 }
 
 var reload = function(name, data, callback){
@@ -53,7 +79,7 @@ var reload = function(name, data, callback){
 			var audio_src = "https://s3-us-west-1.amazonaws.com/patrickmichaelsen/" + app.state.current_song._id + ".mp3";
 			if(typeof(app.audio) !== 'undefined' ){
 				if (!(typeof(app.audio.play) !== 'undefined')){
-					app.audio = new Audio(audio_src); 
+					app.audio = new Audio(audio_src);
 				}
 				if( audio_src !== app.audio.src ){
 					app.audio.pause();
@@ -66,6 +92,7 @@ var reload = function(name, data, callback){
 					app.audio.pause();
 				} 
 				app.audio.loop = app.state.loop; 
+				app.audio.onended = playNext;
 			} 
 
 			callback();
@@ -120,6 +147,28 @@ var attach_events = function(){
 		$("#play_pause").on('click', function(){ 
 			app.state.playing = !app.state.playing;
 			reload("reload", app.state, attach_events);
+		}); 
+
+		$("#loop_btn").on('click', function(){ 
+			app.state.loop = !app.state.loop;
+			reload("reload", app.state, attach_events);
+		}); 
+
+		$("#shuffle_btn").on('click', function(){ 
+			app.state.shuffle = !app.state.shuffle;
+			reload("reload", app.state, attach_events);
+		}); 
+
+		$("#skip_forward_btn").on('click', function(){ 
+			playNext();
+			call_post("song", app.state, function GetSong(song){
+				app.state.current_song = song;
+				render();
+			});
+		}); 
+
+		$("#skip_back_btn").on('click', function(){ 
+			//reload("reload", app.state, attach_events);
 		}); 
 
 		$(".play_song").on('click', function(event){ 

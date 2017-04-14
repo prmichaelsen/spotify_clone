@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-xs-1"/>
 		<% if ( (view.current_song._id === view.songs[i]._id) && (view.playing === 'true') ) { %>
-			<div class="pause_song col-xs-1" data-song-id="<%= view.songs[i]._id %>">
+			<div class="pause_song col-xs-1 active_item" data-song-id="<%= view.songs[i]._id %>">
 				<i class="fa fa-pause-circle-o fa-lg"/>
 			</div>
 		<% } else { %>
