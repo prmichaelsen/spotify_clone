@@ -52,14 +52,21 @@ var reload = function(name, data, callback){
 			
 			var audio_src = "https://s3-us-west-1.amazonaws.com/patrickmichaelsen/" + app.state.current_song._id + ".mp3";
 			if(typeof(app.audio) !== 'undefined' ){
-				if (!(typeof(app.audio) === 'Audio' && audio_src == app.audio.src)){
-					app.audio = new Audio(audio_src);
-					if(app.state.playing){
-						app.audio.play();
-					}
-					app.audio.loop = app.state.loop; 
+				if (!(typeof(app.audio.play) !== 'undefined')){
+					app.audio = new Audio(audio_src); 
 				}
-			}
+				if( audio_src !== app.audio.src ){
+					app.audio.pause();
+					delete app.audio; //jvm garbage should take care of this
+					app.audio = new Audio(audio_src);
+				} 
+				if(app.state.playing){
+					app.audio.play();
+				}else{
+					app.audio.pause();
+				} 
+				app.audio.loop = app.state.loop; 
+			} 
 
 			callback();
 		}
