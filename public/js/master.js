@@ -122,6 +122,7 @@ var attach_events = function(){
 			reload("reload", app.state, attach_events);
 		}); 
 
+		/*
 		$(".play_song").on('click', function(event){ 
 			app.state.playing = true;
 			app.state.current_song._id = $(event.currentTarget).data("song-id");
@@ -130,6 +131,7 @@ var attach_events = function(){
 				render();
 			});
 		}); 
+		*/
 
 		$(".pause_song").on('click', function(event){ 
 			app.state.playing = false;
@@ -139,4 +141,13 @@ var attach_events = function(){
 		$(".nav_back").on('click', function(){ 
 			reload("reload", app.state, attach_events);
 		}); 
+}
+
+var play_song = function(song){
+	app.state.playing = true;
+	app.state.current_song._id = $(song).data("song-id");
+	call_post("song", app.state, function GetSong(song){
+		app.state.current_song = song;
+		render(); 
+	}); 
 }
