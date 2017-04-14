@@ -143,11 +143,16 @@ var attach_events = function(){
 		}); 
 }
 
-var play_song = function(song){
+var play_song = function(event){
+	event = event || window.event; // IE
+	var target = event.target || event.srcElement; // IE
+	var current = event.currentTarget;
+
 	app.state.playing = true;
-	app.state.current_song._id = $(song).data("song-id");
+	app.state.current_song._id = $(current).data("song-id");
 	call_post("song", app.state, function GetSong(song){
 		app.state.current_song = song;
 		render(); 
 	}); 
+
 }
