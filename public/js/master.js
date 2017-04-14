@@ -18,24 +18,21 @@ $(document).ready(()=>{
 		attach_events(); 
 	}); 
 
-	var audio = new Audio('https://s3-us-west-1.amazonaws.com/patrickmichaelsen/Miami+Viceroy.mp3');
-	app.audio = audio;
-	audio.loop = true;
-	//audio.play();
-
 });
 
 var app = {
 	state: {
 		playing: false,
+		loop: false,
 		current_song: {
 			song_title: "R U Mine?",
 			artist_title: "Arctic Monkeys",
 			album_title: "A.M.", 
-			_id: 3,
+			_id: '58eee43c734d1d271d386885',
 		},
 		songs: [], 
 	},
+	audio: {},
 };
 
 var defined = function(variable){
@@ -52,6 +49,18 @@ var reload = function(name, data, callback){
 		success: (html)=>{
 			$(".reload").html(html); 
 			$('.content').scrollTop(content_scroll);
+			
+			var audio_src = "https://s3-us-west-1.amazonaws.com/patrickmichaelsen/" + app.state.current_song._id + ".mp3";
+			if(typeof(app.audio) !== 'undefined' ){
+				if (!(typeof(app.audio) === 'Audio' && audio_src == app.audio.src)){
+					app.audio = new Audio(audio_src);
+					if(app.state.playing){
+						app.audio.play();
+					}
+					app.audio.loop = app.state.loop; 
+				}
+			}
+
 			callback();
 		}
 	}); 
