@@ -6,12 +6,14 @@ $(document).ready(()=>{
 		}
 	}
 
+	//initialization
 	app.set("location", "Songs");
+	app.queue = new Queue();
 
 	call_get("songs", {}, function(data){
 		app.state.songs = (data)? data : [];
-		app.state.queue.songs = (data)? data : new Array();
-		app.state.current_song = (app.state.songs.length) ? app.state.songs[0] : {};
+		app.queue.fill((data)? data : new Array());
+		app.state.current_song = app.queue.pop();
 		call_post("song", app.state, function GetSong(song){
 			app.state.current_song = song;
 			render();
@@ -31,21 +33,10 @@ var app = {
 		shuffle: false,
 		current_song: {},
 		songs: [], 
-		queue: {
-			position: 0,
-			songs: [],
-		},
 	},
+	queue: {},
 	audio: {},
-};
-
-//app.state.queue.set = function ( songs ){
-	//app.state.queue.songs = songs;
-//}
-
-//app.state.queue.add = function( song ){
-	//app.state.queue.songs.push(song); 
-//}
+}; 
 
 
 var defined = function(variable){
@@ -53,15 +44,12 @@ var defined = function(variable){
 }
 
 var playNext = function( ){
-	if(defined(app.state.queue.songs)){
-		app.state.queue.position += 1;
-		if(app.state.queue.position < app.state.queue.songs.length){
-			app.state.current_song._id = app.state.queue.songs[app.state.queue.position]._id;
-			call_post("song", app.state, function GetSong(song){
-				app.state.current_song = song;
-				render();
-			});
-		} 
+	if(defined(app.queue)){
+		app.state.current_song._id = app.queue.pop()._id;
+		call_post("song", app.state, function GetSong(song){
+			app.state.current_song = song;
+			render();
+		});
 	} 
 }
 
@@ -76,24 +64,27 @@ var reload = function(name, data, callback){
 			$(".reload").html(html); 
 			$('.content').scrollTop(content_scroll);
 			
-			var audio_src = "https://s3-us-west-1.amazonaws.com/patrickmichaelsen/" + app.state.current_song._id + ".mp3";
-			if(typeof(app.audio) !== 'undefined' ){
-				if (!(typeof(app.audio.play) !== 'undefined')){
-					app.audio = new Audio(audio_src);
-				}
-				if( audio_src !== app.audio.src ){
-					app.audio.pause();
-					delete app.audio; //jvm garbage should take care of this
-					app.audio = new Audio(audio_src);
+
+			if(defined(app.state.current_song._id)){
+				var audio_src = "https://s3-us-west-1.amazonaws.com/patrickmichaelsen/" + app.state.current_song._id + ".mp3";
+				if(typeof(app.audio) !== 'undefined' ){
+					if (!(typeof(app.audio.play) !== 'undefined')){
+						app.audio = new Audio(audio_src);
+					}
+					if( audio_src !== app.audio.src ){
+						app.audio.pause();
+						delete app.audio; //jvm garbage should take care of this
+						app.audio = new Audio(audio_src);
+					} 
+					if(app.state.playing){
+						app.audio.play();
+					}else{
+						app.audio.pause();
+					} 
+					app.audio.loop = app.state.loop; 
+					app.audio.onended = playNext;
 				} 
-				if(app.state.playing){
-					app.audio.play();
-				}else{
-					app.audio.pause();
-				} 
-				app.audio.loop = app.state.loop; 
-				app.audio.onended = playNext;
-			} 
+			}
 
 			callback();
 		}
@@ -161,6 +152,7 @@ var attach_events = function(){
 
 		$("#skip_forward_btn").on('click', function(){ 
 			playNext();
+			app.state.playing = true;
 			call_post("song", app.state, function GetSong(song){
 				app.state.current_song = song;
 				render();
@@ -174,6 +166,9 @@ var attach_events = function(){
 		$(".play_song").on('click', function(event){ 
 			app.state.playing = true;
 			app.state.current_song._id = $(event.currentTarget).data("song-id");
+			var index = app.state.songs.findIndex( song => song._id === app.state.current_song._id );
+			app.queue.fill(app.state.songs.slice(index));
+			playNext();
 			call_post("song", app.state, function GetSong(song){
 				app.state.current_song = song;
 				render();
@@ -188,4 +183,82 @@ var attach_events = function(){
 		$(".nav_back").on('click', function(){ 
 			reload("reload", app.state, attach_events);
 		}); 
+}
+
+/*
+
+Queue.js
+
+A function to represent a queue
+
+Created by Stephen Morley - http://code.stephenmorley.org/ - and released under
+the terms of the CC0 1.0 Universal legal code:
+
+http://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+*/
+
+/* Creates a new queue. A queue is a first-in-first-out (FIFO) data structure -
+ * items are added to the end of the queue and removed from the front.
+ */
+function Queue() {
+
+  // initialise the queue and offset
+  this.queue  = [];
+  this.offset = 0;
+
+	this.fill = function(array){
+		if(Array.isArray(array)){ 
+			this.queue = array;
+			this.offset = 0;
+		}
+		else {
+			throw "Queue.fill() requires an array as a parameter";
+		}
+	}
+
+  // Returns the length of the this.queue.
+  this.length = function(){
+    return (this.queue.length - this.offset);
+  }
+
+  // Returns true if the this.queue is empty, and false otherwise.
+  this.empty = function(){
+    return (this.queue.length == 0);
+  }
+
+  /* Enthis.queues the specified item. The parameter is:
+   *
+   * item - the item to enthis.queue
+   */
+  this.push = function(item){
+    this.queue.push(item);
+  }
+
+  this.pop = function(){
+
+    // if the this.queue is empty, return immediately
+    if (this.queue.length == 0)  { return undefined; }
+
+    // store the item at the front of the this.queue
+    var item = this.queue[this.offset];
+
+    // increment the this.offset and remove the free space if necessary
+    if (++ this.offset * 2 >= this.queue.length){
+      this.queue  = this.queue.slice(this.offset);
+      this.offset = 0;
+    }
+
+    // return the dethis.queued item
+    return item;
+
+  }
+
+  /* Returns the item at the front of the this.queue (without dequeuing it). If the
+   * this.queue is empty then undefined is returned.
+   */
+  this.peek = function(){
+    return (this.queue.length > 0 ? this.queue[this.offset] : undefined);
+  }
+
 }

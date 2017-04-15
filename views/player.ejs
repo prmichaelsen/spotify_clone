@@ -26,14 +26,14 @@
 	</div>
 	<div class="song_info clearfix">
 		<div class="song_title col-xs-12">
-			<% if (view.current_song.song_title) {%>
+			<% if (view.current_song && view.current_song.song_title) {%>
 				<%= view.current_song.song_title %>
 			<% } else { %> 
 				Song Title
 			<% } %> 
 		</div>
 		<div class="artist_title col-xs-12">
-			<% if (view.current_song.artist_title) {%>
+			<% if (view.current_song && view.current_song.artist_title) {%>
 				<%= view.current_song.artist_title %>
 			<% } else { %> 
 				Artist Title
