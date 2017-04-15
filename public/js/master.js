@@ -9,6 +9,7 @@ $(document).ready(()=>{
 	//initialization
 	app.set("location", "Songs");
 	app.queue = new Queue();
+	app.history = new Array();
 
 	call_get("songs", {}, function(data){
 		app.state.songs = (data)? data : [];
@@ -35,6 +36,7 @@ var app = {
 		songs: [], 
 	},
 	queue: {},
+	history: {},
 	audio: {},
 }; 
 
@@ -151,6 +153,7 @@ var attach_events = function(){
 		}); 
 
 		$("#skip_forward_btn").on('click', function(){ 
+			app.history.push(app.state.current_song._id);
 			playNext();
 			app.state.playing = true;
 			call_post("song", app.state, function GetSong(song){
@@ -165,10 +168,14 @@ var attach_events = function(){
 
 		$(".play_song").on('click', function(event){ 
 			app.state.playing = true;
+			var current_song_id = app.state.current_song._id;
 			app.state.current_song._id = $(event.currentTarget).data("song-id");
-			var index = app.state.songs.findIndex( song => song._id === app.state.current_song._id );
-			app.queue.fill(app.state.songs.slice(index));
-			playNext();
+			if( app.state.current_song._id !== current_song_id ){
+				app.history.push(app.state.current_song._id);
+				var index = app.state.songs.findIndex( song => song._id === app.state.current_song._id );
+				app.queue.fill(app.state.songs.slice(index));
+				playNext(); 
+			}
 			call_post("song", app.state, function GetSong(song){
 				app.state.current_song = song;
 				render();
