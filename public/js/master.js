@@ -163,7 +163,15 @@ var attach_events = function(){
 		}); 
 
 		$("#skip_back_btn").on('click', function(){ 
-			//reload("reload", app.state, attach_events);
+			var song_id = app.history.pop();
+			if( defined( song_id ) ){
+				app.queue.push({_id: song_id});
+				app.state.current_song._id = song_id;
+				call_post("song", app.state, function GetSong(song){
+					app.state.current_song = song;
+					render();
+				});
+			}
 		}); 
 
 		$(".play_song").on('click', function(event){ 
